@@ -2071,12 +2071,21 @@ footer {
 
 .fab-contact {
   position: relative;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  gap: 0;
+}
+
+.fab-contact.is-open {
+  gap: 12px;
 }
 
 .fab-contact-toggle {
   position: relative;
   background: var(--ember);
   z-index: 2;
+  flex-shrink: 0;
 }
 
 .fab-contact-toggle:hover {
@@ -2122,21 +2131,21 @@ footer {
 }
 
 .fab-contact-panel {
-  position: absolute;
-  right: 0;
-  bottom: calc(100% + 12px);
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   align-items: flex-end;
   gap: 10px;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(8px);
+  transform: translateY(10px);
   pointer-events: none;
+  max-height: 0;
+  overflow: hidden;
   transition:
     opacity 0.24s var(--ease),
     transform 0.24s var(--ease),
-    visibility 0.24s;
+    visibility 0.24s,
+    max-height 0.24s var(--ease);
 }
 
 .fab-contact.is-open .fab-contact-panel {
@@ -2144,6 +2153,8 @@ footer {
   visibility: visible;
   transform: translateY(0);
   pointer-events: auto;
+  max-height: 280px;
+  overflow: visible;
 }
 
 .fab-contact-link {
@@ -2155,7 +2166,7 @@ footer {
   color: #fff;
   background: var(--forest-deep);
   box-shadow: 0 8px 22px rgba(11, 22, 18, 0.24);
-  transform: translateY(6px) scale(0.9);
+  transform: translateY(8px) scale(0.9);
   opacity: 0;
   transition:
     transform 0.28s var(--ease),
@@ -2168,6 +2179,7 @@ footer {
   opacity: 1;
 }
 
+/* Od przycisku w górę (column-reverse: 1. dziecko najbliżej toggle) */
 .fab-contact.is-open .fab-contact-link:nth-child(1) { transition-delay: 0.04s; }
 .fab-contact.is-open .fab-contact-link:nth-child(2) { transition-delay: 0.08s; }
 .fab-contact.is-open .fab-contact-link:nth-child(3) { transition-delay: 0.12s; }
