@@ -1,0 +1,14 @@
+# Źródła / robocze (strona używa WebP)
+images/*.png
+images/*.jpg
+images/*.jpeg
+images/ChatGPT*
+images/Gemini*
+
+# System / edytory
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+*.log
