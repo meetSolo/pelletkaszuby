@@ -2156,13 +2156,228 @@
       }
     }
 
+    /* Floating action buttons */
+    .fab-stack {
+      position: fixed;
+      right: max(16px, env(safe-area-inset-right));
+      bottom: max(20px, env(safe-area-inset-bottom));
+      z-index: 90;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+      pointer-events: none;
+    }
+
+    .fab-stack > * {
+      pointer-events: auto;
+    }
+
+    .fab-btn {
+      width: 52px;
+      height: 52px;
+      border: 0;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      color: #fff;
+      background: var(--forest-deep);
+      box-shadow: 0 10px 28px rgba(11, 22, 18, 0.28);
+      transition:
+        opacity 0.28s var(--ease),
+        transform 0.28s var(--ease),
+        visibility 0.28s,
+        background 0.2s ease;
+    }
+
+    .fab-btn svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .fab-btn svg.is-filled {
+      fill: currentColor;
+      stroke: none;
+    }
+
+    .fab-btn:hover {
+      background: var(--forest);
+      transform: translateY(-2px);
+    }
+
+    .fab-btn:focus-visible {
+      outline: 2px solid var(--ember);
+      outline-offset: 3px;
+    }
+
+    .fab-top {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px) scale(0.92);
+      pointer-events: none;
+    }
+
+    .fab-top.is-visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .fab-contact {
+      position: relative;
+    }
+
+    .fab-contact-toggle {
+      position: relative;
+      background: var(--ember);
+      z-index: 2;
+    }
+
+    .fab-contact-toggle:hover {
+      background: var(--ember-deep);
+    }
+
+    .fab-contact-toggle.is-open {
+      background: var(--forest-deep);
+      animation: none;
+    }
+
+    .fab-contact-toggle.is-open:hover {
+      background: var(--forest);
+    }
+
+    .fab-contact-toggle::before {
+      content: "";
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 2px solid color-mix(in srgb, var(--ember) 55%, transparent);
+      animation: fabPulse 1.8s var(--ease) infinite;
+      pointer-events: none;
+    }
+
+    .fab-contact-toggle.is-open::before {
+      display: none;
+    }
+
+    @keyframes fabPulse {
+      0% {
+        transform: scale(1);
+        opacity: 0.85;
+      }
+      70% {
+        transform: scale(1.35);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1.35);
+        opacity: 0;
+      }
+    }
+
+    .fab-contact-panel {
+      position: absolute;
+      right: 0;
+      bottom: calc(100% + 12px);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(8px);
+      pointer-events: none;
+      transition:
+        opacity 0.24s var(--ease),
+        transform 0.24s var(--ease),
+        visibility 0.24s;
+    }
+
+    .fab-contact.is-open .fab-contact-panel {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .fab-contact-link {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--forest-deep);
+      box-shadow: 0 8px 22px rgba(11, 22, 18, 0.24);
+      transform: translateY(6px) scale(0.9);
+      opacity: 0;
+      transition:
+        transform 0.28s var(--ease),
+        opacity 0.28s var(--ease),
+        background 0.2s ease;
+    }
+
+    .fab-contact.is-open .fab-contact-link {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .fab-contact.is-open .fab-contact-link:nth-child(1) { transition-delay: 0.04s; }
+    .fab-contact.is-open .fab-contact-link:nth-child(2) { transition-delay: 0.08s; }
+    .fab-contact.is-open .fab-contact-link:nth-child(3) { transition-delay: 0.12s; }
+    .fab-contact.is-open .fab-contact-link:nth-child(4) { transition-delay: 0.16s; }
+
+    .fab-contact-link:hover {
+      background: var(--ember);
+    }
+
+    .fab-contact-link:focus-visible {
+      outline: 2px solid var(--ember);
+      outline-offset: 3px;
+    }
+
+    .fab-contact-link svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .fab-contact-link svg.is-filled {
+      fill: currentColor;
+      stroke: none;
+    }
+
+    .fab-icon-close {
+      display: none;
+    }
+
+    .fab-contact-toggle.is-open .fab-icon-open {
+      display: none;
+    }
+
+    .fab-contact-toggle.is-open .fab-icon-close {
+      display: block;
+    }
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .slide,
       .reveal,
       .quality-visual,
       .hero-copy,
-      .slider-dot::after {
+      .slider-dot::after,
+      .fab-contact-toggle::before {
         animation: none !important;
         transition: none !important;
       }
@@ -2170,6 +2385,12 @@
       .quality-visual {
         opacity: 1;
         transform: none;
+      }
+      .fab-btn,
+      .fab-top,
+      .fab-contact-panel,
+      .fab-contact-link {
+        transition: none !important;
       }
     }
   </style>
@@ -2711,6 +2932,46 @@
     </div>
   </footer>
 
+  <div class="fab-stack" aria-label="Szybkie akcje">
+    <button type="button" class="fab-btn fab-top" id="fab-top" aria-label="Wróć na górę strony" aria-hidden="true" tabindex="-1">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 19V5M5 12l7-7 7 7" />
+      </svg>
+    </button>
+
+    <div class="fab-contact" id="fab-contact">
+      <div class="fab-contact-panel" id="fab-contact-panel" role="menu" aria-label="Opcje kontaktu" aria-hidden="true">
+        <a class="fab-contact-link" href="tel:+4800000000" role="menuitem" aria-label="Zadzwoń" title="Zadzwoń">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.68 2.34a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.74-1.25a2 2 0 0 1 2.11-.45c.74.32 1.53.55 2.34.68A2 2 0 0 1 22 16.92z"/></svg>
+        </a>
+        <a class="fab-contact-link" href="sms:+48000000000" role="menuitem" aria-label="Wyślij SMS" title="SMS">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </a>
+        <a class="fab-contact-link" href="mailto:pelletkaszuby@gmail.com" role="menuitem" aria-label="Napisz maila" title="E-mail">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </a>
+        <a class="fab-contact-link" href="https://wa.me/48000000000" target="_blank" rel="noopener noreferrer" role="menuitem" aria-label="WhatsApp" title="WhatsApp">
+          <svg class="is-filled" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.47 14.38c-.28-.14-1.64-.81-1.9-.9-.25-.1-.44-.14-.62.14-.18.27-.71.9-.87 1.08-.16.18-.32.2-.6.07-.28-.14-1.17-.43-2.23-1.37-.82-.73-1.38-1.64-1.54-1.92-.16-.27-.02-.42.12-.56.13-.12.28-.32.42-.48.14-.16.18-.27.28-.45.09-.18.05-.34-.02-.48-.07-.14-.62-1.5-.85-2.05-.22-.53-.45-.46-.62-.47h-.53c-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.3s.99 2.67 1.12 2.85c.14.18 1.95 2.98 4.72 4.18.66.28 1.18.45 1.58.58.66.21 1.27.18 1.75.11.53-.08 1.64-.67 1.87-1.32.23-.65.23-1.2.16-1.32-.07-.11-.25-.18-.53-.32zM12.04 2C6.5 2 2 6.48 2 12c0 1.77.46 3.43 1.27 4.87L2.05 22l5.27-1.38A9.94 9.94 0 0 0 12.04 22C17.56 22 22 17.52 22 12S17.56 2 12.04 2zm0 18.15c-1.55 0-3-.42-4.25-1.15l-.3-.18-3.13.82.84-3.05-.2-.31A8.1 8.1 0 0 1 3.9 12c0-4.48 3.66-8.12 8.14-8.12 4.49 0 8.14 3.64 8.14 8.12 0 4.48-3.65 8.15-8.14 8.15z"/></svg>
+        </a>
+      </div>
+      <button
+        type="button"
+        class="fab-btn fab-contact-toggle"
+        id="fab-contact-toggle"
+        aria-label="Otwórz kontakt"
+        aria-expanded="false"
+        aria-controls="fab-contact-panel"
+      >
+        <svg class="fab-icon-open" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.68 2.34a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.74-1.25a2 2 0 0 1 2.11-.45c.74.32 1.53.55 2.34.68A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        <svg class="fab-icon-close" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
   <script>
     const slides = [...document.querySelectorAll('.slide')];
     const dots = [...document.querySelectorAll('.slider-dot')];
@@ -2756,9 +3017,58 @@
     }, { once: true });
 
     const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
+    const fabTop = document.getElementById('fab-top');
+    const fabContact = document.getElementById('fab-contact');
+    const fabContactToggle = document.getElementById('fab-contact-toggle');
+    const fabContactPanel = document.getElementById('fab-contact-panel');
+
+    function setFabTopVisible(visible) {
+      fabTop.classList.toggle('is-visible', visible);
+      fabTop.setAttribute('aria-hidden', visible ? 'false' : 'true');
+      fabTop.tabIndex = visible ? 0 : -1;
+    }
+
+    function closeFabContact() {
+      fabContact.classList.remove('is-open');
+      fabContactToggle.classList.remove('is-open');
+      fabContactToggle.setAttribute('aria-expanded', 'false');
+      fabContactToggle.setAttribute('aria-label', 'Otwórz kontakt');
+      fabContactPanel.setAttribute('aria-hidden', 'true');
+    }
+
+    function openFabContact() {
+      fabContact.classList.add('is-open');
+      fabContactToggle.classList.add('is-open');
+      fabContactToggle.setAttribute('aria-expanded', 'true');
+      fabContactToggle.setAttribute('aria-label', 'Zamknij kontakt');
+      fabContactPanel.setAttribute('aria-hidden', 'false');
+    }
+
+    function onScrollFabs() {
       nav.classList.toggle('scrolled', window.scrollY > 30);
-    }, { passive: true });
+      setFabTopVisible(window.scrollY > 420);
+    }
+
+    window.addEventListener('scroll', onScrollFabs, { passive: true });
+    onScrollFabs();
+
+    fabTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    fabContactToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (fabContact.classList.contains('is-open')) closeFabContact();
+      else openFabContact();
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!fabContact.contains(e.target)) closeFabContact();
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeFabContact();
+    });
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
